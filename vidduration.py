@@ -83,7 +83,9 @@ def main():
         total_duration += duration if duration > 0 else 0
         fsize = os.path.getsize(fname)
         total_fsize += fsize
-        rows.append((fname + " ", " " + format_duration(duration), " " + prettysize(fsize)))
+        rows.append(
+            (fname + " ", " " + format_duration(duration), " " + prettysize(fsize))
+        )
 
     rows.append(None)
     rows.append(
