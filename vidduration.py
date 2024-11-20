@@ -73,7 +73,7 @@ def main():
     total_duration = 0
     total_fsize = 0
     rows = []
-    rows.append(("File", "Duration", "Size"))
+    rows.append(("File ", " Duration", " Size"))
     rows.append(None)
     for p, fname in jobs:
         #  NOTE: communicate to avoid deadlock if ffprobe has a lot of output
@@ -83,12 +83,12 @@ def main():
         total_duration += duration if duration > 0 else 0
         fsize = os.path.getsize(fname)
         total_fsize += fsize
-        rows.append((fname, " " + format_duration(duration), " " + prettysize(fsize)))
+        rows.append((fname + " ", " " + format_duration(duration), " " + prettysize(fsize)))
 
     rows.append(None)
     rows.append(
         (
-            "TOTAL",
+            "TOTAL ",
             " " + format_duration(total_duration),
             " " + prettysize(total_fsize),
         )
