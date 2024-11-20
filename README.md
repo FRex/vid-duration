@@ -2,6 +2,12 @@
 
 A simple Python 3 script to run `ffprobe` and print durations and sizes of media files.
 
+Requires (and works on any) Python 3.6 or above, due to usage of
+[f-strings](https://docs.python.org/3/reference/lexical_analysis.html#f-strings).
+
+If you require support for older Python 3.x or 2.7, or find a mistake - let me know.
+
+
 ```
 $ python3 vidduration.py /e/*.*
 File         | Duration|      Size
