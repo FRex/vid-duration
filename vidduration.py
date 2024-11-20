@@ -10,9 +10,16 @@ FFMPEG_ARGS = ("ffprobe", "-v", "quiet", "-print_format", "json", "-show_format"
 
 
 def format_duration(duration: int) -> str:
-    """Format duration into HH:MM:SS, or ??? on negative."""
+    """Format duration into HH:MM:SS, MM:SS if under 1 hour, or ??? on negative."""
     h, m, s = duration // 3600, (duration % 3600) // 60, duration % 60
-    return "???" if duration < 0 else f"{h:02d}:{m:02d}:{s:02d}"
+    ret = "???" if duration < 0 else f"{h:02d}:{m:02d}:{s:02d}"
+
+    # NOTE: if hours is 00 then cut it off, so it's either hh:mm:ss with non-zero
+    # hh or it's mm:ss with any mm, including just 00, like VLC and many other
+    # tools display, so it's not just a single number of seconds for sub 1 min
+    if ret.startswith("00:"):
+        ret = ret[3:]
+    return ret
 
 
 def format_pretty_table(origdata, rjust=()) -> str:
@@ -80,7 +87,7 @@ def main():
 
     rows.append(None)
     rows.append(("TOTAL", format_duration(total_duration), prettysize(total_fsize)))
-    t = format_pretty_table(rows, rjust=(2,))
+    t = format_pretty_table(rows, rjust=(1, 2))
     print(t)
 
 
